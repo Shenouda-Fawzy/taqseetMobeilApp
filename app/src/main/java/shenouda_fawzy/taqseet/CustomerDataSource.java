@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -102,7 +101,55 @@ public class CustomerDataSource {
         values.put(CustomerOpenHelper.COLUMN_USER_PAID , payment );
 
         long id = database.insert(CustomerOpenHelper.USER_PAYMENT_TABLE , null, values);
-        Log.i("LOG_TAG" , "Row id: " + id);
+        //Log.i("LOG_TAG" , "Row id: " + id);
     }
 
+    public ArrayList<Payment> getAllPayment(String userPhone){
+        ArrayList<Payment> paymentArrayList = new ArrayList<>();
+
+        final String [] ALL_COLUMNS = {
+                CustomerOpenHelper.COLUMN_USER_PAY_DATE,
+                CustomerOpenHelper.COLUMN_USER_PAID
+        };
+
+        final String [] USER_PHONE = {userPhone};
+
+        Cursor resltQuery = database.query(CustomerOpenHelper.USER_PAYMENT_TABLE,ALL_COLUMNS , "userPhone = ?" , USER_PHONE , null , null , null);
+        if(resltQuery.getCount() > 0){
+            while(resltQuery.moveToNext()){
+                Payment payment = new Payment();
+                String payDate = resltQuery.getString(resltQuery.getColumnIndex(CustomerOpenHelper.COLUMN_USER_PAY_DATE));
+                String payValue = resltQuery.getString(resltQuery.getColumnIndex(CustomerOpenHelper.COLUMN_USER_PAID));
+                payment.setDate(payDate);
+                payment.setPaid(payValue);
+                paymentArrayList.add(payment);
+            }
+        }
+
+        return paymentArrayList;
+    }
+
+    public float getTotalPaid(String userPhone){
+
+        float sum = 0.0f;
+
+        final String [] SUMMITION = {
+                "sum(paid)"
+        };
+
+        final String [] USER_PHONE = {userPhone};
+
+        Cursor resltQuery = database.query(CustomerOpenHelper.USER_PAYMENT_TABLE,SUMMITION , "userPhone = ?" , USER_PHONE , null , null , null);
+        if(resltQuery.getCount() > 0)
+            if(resltQuery.moveToNext()){
+                sum = resltQuery.getFloat(resltQuery.getColumnIndex("sum(paid)"));
+            }
+
+        return sum;
+    }
+
+    public void deleteCustomer(String phoneNumber){
+        final String [] PHONE_NUMBER = {phoneNumber};
+        database.delete(CustomerOpenHelper.USER_TABLE , "userPhone = ?" , PHONE_NUMBER);
+    }
 }

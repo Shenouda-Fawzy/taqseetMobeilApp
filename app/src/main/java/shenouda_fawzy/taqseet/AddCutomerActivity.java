@@ -1,11 +1,11 @@
 package shenouda_fawzy.taqseet;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class AddCutomerActivity extends AppCompatActivity {
 
@@ -15,7 +15,10 @@ public class AddCutomerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cutomer);
-        Toast.makeText(this,"Hello from second activity" , Toast.LENGTH_LONG).show();
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); // To disable rotate to landscape mode
+
+        //Toast.makeText(this,"Hello from second activity" , Toast.LENGTH_LONG).show();
 
         if(getSupportActionBar() != null) // for enabling  back <- button .
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

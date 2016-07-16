@@ -12,7 +12,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="@string/add_new_customer"
         android:id="@+id/btnAddCust"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -22,7 +22,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="@string/view_all_customer"
         android:id="@+id/button2"
         android:layout_below="@+id/btnAddCust"
         android:layout_marginTop="10dp"

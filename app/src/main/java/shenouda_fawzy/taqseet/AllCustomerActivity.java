@@ -1,9 +1,11 @@
 package shenouda_fawzy.taqseet;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,7 +24,7 @@ public class AllCustomerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_customer);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); // To disable rotate to landscape mode
         if(getSupportActionBar() != null) // for enabling  back <- button .
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -40,13 +42,40 @@ public class AllCustomerActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("LOG_TAG",arrayList.get(position).getCustomerName());
+                //Log.i("LOG_TAG",arrayList.get(position).getCustomerName());
                 Intent intent = new Intent(AllCustomerActivity.this,CustomerDetailActivity.class);
                 intent.putExtra(CUTOMER_PHONE, arrayList.get(position).getPhonNumber());
                 startActivity(intent);
             }
         });
 
+        registerForContextMenu(lv);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu , v , menuInfo);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.delete_item , menu);
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        //return super.onContextItemSelected(item);
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        int id = item.getItemId();
+        if(id == R.id.deleteCust) {
+            Customer customer = arrayList.get(info.position);
+            dataSource.openDataBase();
+            dataSource.deleteCustomer(customer.getPhonNumber());
+            arrayList = dataSource.getAllCustomer();
+            ArrayAdapter adapter = new CustomerArrayAdapter(this, 0 , arrayList);
+            lv.setAdapter(adapter);
+            dataSource.closeDatabase();
+            //Log.i("LOG_TAG", "CUST phone is" + customer.getPhonNumber());
+        }
+        return true;
     }
 
     @Override

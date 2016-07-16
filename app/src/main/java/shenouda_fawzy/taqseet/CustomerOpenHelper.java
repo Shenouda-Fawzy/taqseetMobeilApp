@@ -3,7 +3,6 @@ package shenouda_fawzy.taqseet;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 /*
  * Created by Amazing on 7/14/2016.
@@ -56,9 +55,9 @@ public class CustomerOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TABLE_USER_CREATE);
-        Log.i(LOG_TAG , "User table created");
+        //Log.i(LOG_TAG , "User table created");
         db.execSQL(TABLE_USER_PAYMENT_CREATE);
-        Log.i(LOG_TAG , "Database created");
+       //Log.i(LOG_TAG , "Database created");
     }
 
     @Override
