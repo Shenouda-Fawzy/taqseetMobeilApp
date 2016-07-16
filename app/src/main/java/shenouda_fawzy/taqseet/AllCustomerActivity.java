@@ -1,5 +1,6 @@
 package shenouda_fawzy.taqseet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class AllCustomerActivity extends AppCompatActivity {
+    public static final String CUTOMER_PHONE = "CUTOMER_PHONE";
     CustomerDataSource dataSource;
     ListView lv;
     ArrayList<Customer> arrayList;
@@ -39,6 +41,9 @@ public class AllCustomerActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i("LOG_TAG",arrayList.get(position).getCustomerName());
+                Intent intent = new Intent(AllCustomerActivity.this,CustomerDetailActivity.class);
+                intent.putExtra(CUTOMER_PHONE, arrayList.get(position).getPhonNumber());
+                startActivity(intent);
             }
         });
 

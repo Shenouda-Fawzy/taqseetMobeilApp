@@ -9,4 +9,75 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="shenouda_fawzy.taqseet.CustomerDetailActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/customerNameTV"
+        android:layout_marginBottom="5dp"
+        android:textSize="25sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/customerPhoneTV"
+        android:textSize="20sp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/customerNameTV"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/totalCostTV"
+        android:textSize="20sp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/customerPhoneTV"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/restTV"
+        android:textSize="20sp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/totalCostTV"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:layout_below="@id/restTV"
+        android:hint="@string/hintPayment"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/payET"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/payET"
+        android:id="@+id/payBtn"
+        android:layout_centerHorizontal="true"
+        android:text="@string/pay_now"
+        android:onClick="payNow"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/all_payment"
+        android:onClick="allPayment"/>
+
+
 </RelativeLayout>

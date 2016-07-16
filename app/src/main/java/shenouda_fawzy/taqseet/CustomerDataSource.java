@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Bundle;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
@@ -66,6 +67,29 @@ public class CustomerDataSource {
             }
         }
         return customerArrayList;
+    }
+    public Bundle getCustomerDetails(String custPhon){
+        Bundle bundle = new Bundle();
+        final String [] CUSTOMER_ALL = {
+                CustomerOpenHelper.COLUMN_USER_NAME,
+                CustomerOpenHelper.COLUMN_USER_PHONE,
+                CustomerOpenHelper.COLUMN_TOTAL_COST
+        };
+        final String [] USER_PHONE = {custPhon};
+        Cursor resultQuerey = database.query(CustomerOpenHelper.USER_TABLE,CUSTOMER_ALL,"userPhone = ?",USER_PHONE,null,null,null);
+
+        if(resultQuerey.getCount() > 0){
+            if(resultQuerey.moveToNext()){
+                String customerName = resultQuerey.getString(resultQuerey.getColumnIndex(CustomerOpenHelper.COLUMN_USER_NAME));
+                String customerPhon = resultQuerey.getString(resultQuerey.getColumnIndex(CustomerOpenHelper.COLUMN_USER_PHONE));
+                float totalCost = resultQuerey.getFloat(resultQuerey.getColumnIndex(CustomerOpenHelper.COLUMN_TOTAL_COST));
+                bundle.putString("CUSTOMER_NAME" , customerName);
+                bundle.putString("CUSTOMER_PHONE" , customerPhon);
+                bundle.putFloat("TOTAL_COST",totalCost);
+            }
+        }
+
+        return bundle;
     }
 
     public void addPayment(String custPhone, float payment){

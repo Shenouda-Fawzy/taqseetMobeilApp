@@ -3,4 +3,7 @@
     <string name="hintCustName">Enter customer name</string>
     <string name="hintPhone">Enter customer phon</string>
     <string name="hintFirstPay">first pay</string>
+    <string name="hintPayment">payment</string>
+    <string name="pay_now">Pay Now</string>
+    <string name="all_payment">All Payment</string>
 </resources>
