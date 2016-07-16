@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class AllCustomerActivity extends AppCompatActivity {
     public static final String CUTOMER_PHONE = "CUTOMER_PHONE";
+    public static final String CUST_ITEM_NAME = "CUST_ITEM_NAME";
     CustomerDataSource dataSource;
     ListView lv;
     ArrayList<Customer> arrayList;
@@ -45,6 +46,8 @@ public class AllCustomerActivity extends AppCompatActivity {
                 //Log.i("LOG_TAG",arrayList.get(position).getCustomerName());
                 Intent intent = new Intent(AllCustomerActivity.this,CustomerDetailActivity.class);
                 intent.putExtra(CUTOMER_PHONE, arrayList.get(position).getPhonNumber());
+                intent.putExtra(CUST_ITEM_NAME, arrayList.get(position).getItemName());
+
                 startActivity(intent);
             }
         });
@@ -60,6 +63,7 @@ public class AllCustomerActivity extends AppCompatActivity {
 
     }
 
+// This context menue is used for deletion purpose.
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         //return super.onContextItemSelected(item);
@@ -68,7 +72,7 @@ public class AllCustomerActivity extends AppCompatActivity {
         if(id == R.id.deleteCust) {
             Customer customer = arrayList.get(info.position);
             dataSource.openDataBase();
-            dataSource.deleteCustomer(customer.getPhonNumber());
+            dataSource.deleteCustomer(customer.getPhonNumber(), customer.getItemName());
             arrayList = dataSource.getAllCustomer();
             ArrayAdapter adapter = new CustomerArrayAdapter(this, 0 , arrayList);
             lv.setAdapter(adapter);

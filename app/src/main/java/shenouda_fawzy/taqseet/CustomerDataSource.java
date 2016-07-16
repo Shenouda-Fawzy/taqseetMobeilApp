@@ -36,21 +36,24 @@ public class CustomerDataSource {
     public void insertCustomer(Customer customer, float totalCost , float firsPay){
         String custName = customer.getCustomerName();
         String custPhone = customer.getPhonNumber();
+        String itemName = customer.getItemName();
 
         ContentValues values = new ContentValues(); // used for database insertion.
         values.put(CustomerOpenHelper.COLUMN_USER_NAME , custName);
         values.put(CustomerOpenHelper.COLUMN_USER_PHONE , custPhone);
         values.put(CustomerOpenHelper.COLUMN_TOTAL_COST , totalCost);
+        values.put(CustomerOpenHelper.COLUMN_ITEM_NAME , itemName);
 
         database.insert(CustomerOpenHelper.USER_TABLE , null , values);
-        addPayment(custPhone, firsPay);
+        addPayment(custPhone, firsPay, itemName);
     }
 
     public ArrayList<Customer> getAllCustomer(){
         ArrayList<Customer> customerArrayList = new ArrayList<>();
         final String [] ALL_COLUMNS = {
                 CustomerOpenHelper.COLUMN_USER_PHONE,
-                CustomerOpenHelper.COLUMN_USER_NAME
+                CustomerOpenHelper.COLUMN_USER_NAME,
+                CustomerOpenHelper.COLUMN_ITEM_NAME
         };
 
         Cursor resltQuery = database.query(CustomerOpenHelper.USER_TABLE,ALL_COLUMNS , null , null , null , null , null);
@@ -60,30 +63,35 @@ public class CustomerDataSource {
                 Customer customer = new Customer();
                 String customerName = resltQuery.getString(resltQuery.getColumnIndex(CustomerOpenHelper.COLUMN_USER_NAME));
                 String customerPhon = resltQuery.getString(resltQuery.getColumnIndex(CustomerOpenHelper.COLUMN_USER_PHONE));
+                String customerItemName = resltQuery.getString(resltQuery.getColumnIndex(CustomerOpenHelper.COLUMN_ITEM_NAME));
                 customer.setCustomerName(customerName);
                 customer.setPhonNumber(customerPhon);
+                customer.setItemName(customerItemName);
                 customerArrayList.add(customer);
             }
         }
         return customerArrayList;
     }
-    public Bundle getCustomerDetails(String custPhon){
+    public Bundle getCustomerDetails(String custPhon , String itemName){
         Bundle bundle = new Bundle();
         final String [] CUSTOMER_ALL = {
                 CustomerOpenHelper.COLUMN_USER_NAME,
                 CustomerOpenHelper.COLUMN_USER_PHONE,
-                CustomerOpenHelper.COLUMN_TOTAL_COST
+                CustomerOpenHelper.COLUMN_TOTAL_COST,
+                CustomerOpenHelper.COLUMN_ITEM_NAME
         };
-        final String [] USER_PHONE = {custPhon};
-        Cursor resultQuerey = database.query(CustomerOpenHelper.USER_TABLE,CUSTOMER_ALL,"userPhone = ?",USER_PHONE,null,null,null);
+        final String [] USER_PHONE = {custPhon,itemName};
+        Cursor resultQuerey = database.query(CustomerOpenHelper.USER_TABLE,CUSTOMER_ALL,"userPhone = ? AND itemName = ?",USER_PHONE,null,null,null);
 
         if(resultQuerey.getCount() > 0){
             if(resultQuerey.moveToNext()){
                 String customerName = resultQuerey.getString(resultQuerey.getColumnIndex(CustomerOpenHelper.COLUMN_USER_NAME));
                 String customerPhon = resultQuerey.getString(resultQuerey.getColumnIndex(CustomerOpenHelper.COLUMN_USER_PHONE));
+                String custItemName = resultQuerey.getString(resultQuerey.getColumnIndex(CustomerOpenHelper.COLUMN_ITEM_NAME));
                 float totalCost = resultQuerey.getFloat(resultQuerey.getColumnIndex(CustomerOpenHelper.COLUMN_TOTAL_COST));
                 bundle.putString("CUSTOMER_NAME" , customerName);
                 bundle.putString("CUSTOMER_PHONE" , customerPhon);
+                bundle.putString("CUST_ITEM_NAME" , custItemName);
                 bundle.putFloat("TOTAL_COST",totalCost);
             }
         }
@@ -91,7 +99,7 @@ public class CustomerDataSource {
         return bundle;
     }
 
-    public void addPayment(String custPhone, float payment){
+    public void addPayment(String custPhone, float payment, String itemName){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String date = sdf.format(new Date());
 
@@ -99,12 +107,13 @@ public class CustomerDataSource {
         values.put(CustomerOpenHelper.COLUMN_USER_PAY_DATE , date);
         values.put(CustomerOpenHelper.COLUMN_USER_PHONE , custPhone );
         values.put(CustomerOpenHelper.COLUMN_USER_PAID , payment );
+        values.put(CustomerOpenHelper.COLUMN_ITEM_NAME , itemName );
 
         long id = database.insert(CustomerOpenHelper.USER_PAYMENT_TABLE , null, values);
         //Log.i("LOG_TAG" , "Row id: " + id);
     }
 
-    public ArrayList<Payment> getAllPayment(String userPhone){
+    public ArrayList<Payment> getAllPayment(String userPhone, String itemName){
         ArrayList<Payment> paymentArrayList = new ArrayList<>();
 
         final String [] ALL_COLUMNS = {
@@ -112,9 +121,9 @@ public class CustomerDataSource {
                 CustomerOpenHelper.COLUMN_USER_PAID
         };
 
-        final String [] USER_PHONE = {userPhone};
+        final String [] USER_PHONE = {userPhone,itemName};
 
-        Cursor resltQuery = database.query(CustomerOpenHelper.USER_PAYMENT_TABLE,ALL_COLUMNS , "userPhone = ?" , USER_PHONE , null , null , null);
+        Cursor resltQuery = database.query(CustomerOpenHelper.USER_PAYMENT_TABLE,ALL_COLUMNS , "userPhone = ? AND itemName = ?" , USER_PHONE , null , null , null);
         if(resltQuery.getCount() > 0){
             while(resltQuery.moveToNext()){
                 Payment payment = new Payment();
@@ -129,7 +138,7 @@ public class CustomerDataSource {
         return paymentArrayList;
     }
 
-    public float getTotalPaid(String userPhone){
+    public float getTotalPaid(String userPhone, String itemName){
 
         float sum = 0.0f;
 
@@ -137,9 +146,9 @@ public class CustomerDataSource {
                 "sum(paid)"
         };
 
-        final String [] USER_PHONE = {userPhone};
+        final String [] USER_PHONE = {userPhone,itemName};
 
-        Cursor resltQuery = database.query(CustomerOpenHelper.USER_PAYMENT_TABLE,SUMMITION , "userPhone = ?" , USER_PHONE , null , null , null);
+        Cursor resltQuery = database.query(CustomerOpenHelper.USER_PAYMENT_TABLE,SUMMITION , "userPhone = ? AND itemName = ?" , USER_PHONE , null , null , null);
         if(resltQuery.getCount() > 0)
             if(resltQuery.moveToNext()){
                 sum = resltQuery.getFloat(resltQuery.getColumnIndex("sum(paid)"));
@@ -148,8 +157,8 @@ public class CustomerDataSource {
         return sum;
     }
 
-    public void deleteCustomer(String phoneNumber){
-        final String [] PHONE_NUMBER = {phoneNumber};
-        database.delete(CustomerOpenHelper.USER_TABLE , "userPhone = ?" , PHONE_NUMBER);
+    public void deleteCustomer(String phoneNumber, String itemName){
+        final String [] PHONE_NUMBER = {phoneNumber,itemName};
+        database.delete(CustomerOpenHelper.USER_TABLE , "userPhone = ? AND itemName = ?" , PHONE_NUMBER);
     }
 }

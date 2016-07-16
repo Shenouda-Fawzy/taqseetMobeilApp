@@ -9,4 +9,7 @@
     <string name="menu_item_delete_customer">Delete customer</string>
     <string name="add_new_customer">Add New Customer</string>
     <string name="view_all_customer">View All Customer</string>
+    <string name="hint_item_name">Item Name</string>
+    <string name="hint_total_price">Total Price</string>
+    <string name="btn_add_customer">Add Customer</string>
 </resources>

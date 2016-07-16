@@ -13,7 +13,7 @@ public class AllPaymentActivity extends AppCompatActivity {
     CustomerDataSource dataSource;
     ListView lv;
     ArrayList<Payment> arrayList;
-    String userPhone;
+    String userPhone,itemName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +23,10 @@ public class AllPaymentActivity extends AppCompatActivity {
 
         dataSource = new CustomerDataSource(this);
         userPhone = getIntent().getStringExtra("CUSTOMER_PHONE");
+        itemName = getIntent().getStringExtra("CUST_ITEM_NAME");
 
         dataSource.openDataBase();
-        arrayList = dataSource.getAllPayment(userPhone);
+        arrayList = dataSource.getAllPayment(userPhone, itemName);
         dataSource.closeDatabase();
 
         lv = (ListView) findViewById(android.R.id.list);

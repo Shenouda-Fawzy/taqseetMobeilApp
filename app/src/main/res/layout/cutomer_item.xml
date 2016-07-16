@@ -12,6 +12,17 @@
         android:paddingTop="10dp"
         />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:layout_marginLeft="10dp"
+        android:text="Hello"
+        android:layout_below="@id/customerNameItem"
+        android:id="@+id/itemNameTV"
+        android:paddingTop="10dp"
+        />
+
 
     <TextView
         android:layout_width="match_parent"
@@ -21,6 +32,6 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_below="@id/customerNameItem"/>
+        android:layout_below="@id/itemNameTV"/>
 
 </RelativeLayout>

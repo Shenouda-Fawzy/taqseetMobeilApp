@@ -30,11 +30,19 @@
         android:inputType="phone" />
 
     <EditText
-        android:id="@+id/totaCost"
+        android:id="@+id/itemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/userPhoneNumber"
-        android:hint="Total Price"
+        android:hint="@string/hint_item_name"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/totaCost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/itemName"
+        android:hint="@string/hint_total_price"
         android:inputType="numberDecimal" />
 
     <EditText
@@ -49,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/firstPay"
-        android:text="Add Customer"
+        android:text="@string/btn_add_customer"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:onClick="addNewCutomer"/>

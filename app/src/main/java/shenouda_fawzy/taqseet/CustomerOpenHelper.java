@@ -21,12 +21,15 @@ public class CustomerOpenHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USER_PHONE = "userPhone";
     public static final String COLUMN_USER_NAME = "userName";
     public static final String COLUMN_TOTAL_COST = "totalCost";
+    public static final String COLUMN_ITEM_NAME = "itemName";
 
     public static final String TABLE_USER_CREATE =
             "CREATE TABLE IF NOT EXISTS " + USER_TABLE + " ( "
-                +COLUMN_USER_PHONE + " VARCHAR(20) NOT NULL PRIMARY KEY, "
+                +COLUMN_USER_PHONE + " VARCHAR(20) NOT NULL, "
                 +COLUMN_USER_NAME + " VARCHAR(256), "
-                +COLUMN_TOTAL_COST + " FLOAT "
+                +COLUMN_TOTAL_COST + " FLOAT, "
+                +COLUMN_ITEM_NAME + " VARCHAR(70) NOT NULL, "
+            +" PRIMARY KEY(userPhone , itemName)"
             + ");";
 
 // ******************************  user_payment table ****************************
@@ -39,9 +42,11 @@ public class CustomerOpenHelper extends SQLiteOpenHelper {
             "CREATE TABLE IF NOT EXISTS " + USER_PAYMENT_TABLE + "( "
                 +COLUMN_USER_PK + " INTEGER PRIMARY KEY AUTOINCREMENT , "
                 +COLUMN_USER_PHONE + " varchar(20) NOT NULL, "
+                +COLUMN_ITEM_NAME + " VARCHAR(70) NOT NULL, "
                 +COLUMN_USER_PAID + " FLOAT NOT NULL, "
                 +COLUMN_USER_PAY_DATE + " DATE, "
-            +" FOREIGN KEY ( " + COLUMN_USER_PHONE+ " ) REFERENCES " + USER_TABLE + "( " + COLUMN_USER_PHONE + " ) ON UPDATE CASCADE ON DELETE CASCADE "
+            +" FOREIGN KEY ( " + COLUMN_USER_PHONE+ " ) REFERENCES " + USER_TABLE + "( " + COLUMN_USER_PHONE + " ) ON UPDATE CASCADE ON DELETE CASCADE, "
+            +" FOREIGN KEY ( " + COLUMN_USER_PAID+ " ) REFERENCES " + USER_TABLE + "( " + COLUMN_USER_PAID + " ) ON UPDATE CASCADE ON DELETE CASCADE "
             + ");";
 
     public CustomerOpenHelper(Context context) { // creating database.

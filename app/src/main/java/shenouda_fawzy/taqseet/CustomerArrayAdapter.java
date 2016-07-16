@@ -34,9 +34,10 @@ public class CustomerArrayAdapter extends ArrayAdapter<Customer> {
 
         TextView custName = (TextView) view.findViewById(R.id.customerNameItem);
         TextView custPhone = (TextView) view.findViewById(R.id.customerPhoneItem);
-
+        TextView custItem = (TextView) view.findViewById(R.id.itemNameTV);
         custName.setText(customer.getCustomerName());
         custPhone.setText(customer.getPhonNumber());
+        custItem.setText(customer.getItemName());
 
         return view;
     }

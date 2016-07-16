@@ -6,6 +6,16 @@ package shenouda_fawzy.taqseet;
 public class Customer {
     String customerName;
     String phonNumber;
+    String itemName;
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
@@ -20,9 +30,10 @@ public class Customer {
 
     }
 
-    public Customer(String customerName,  String phonNumber) {
+    public Customer(String customerName,  String phonNumber, String itemName) {
         this.customerName = customerName;
         this.phonNumber = phonNumber;
+        this.itemName = itemName;
 
     }
 
