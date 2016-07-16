@@ -54,10 +54,10 @@ public class CustomerDetailActivity extends AppCompatActivity {
 
         customerNameTV.setText(customerName);
         customerPhoneTV.setText(customerPhone);
-        itemNameTV.setText("Item: " + customerItemName);
+        itemNameTV.setText(getResources().getText(R.string.itemName).toString()+ ": " + customerItemName);
 
-        totalCostTV.setText("Total cost: " + totalCost);
-        restTV.setText("Total paid: " + rest);
+        totalCostTV.setText(getResources().getText(R.string.totalCost).toString() + ": " + totalCost);
+        restTV.setText(getResources().getText(R.string.totalPaid).toString() + ": " + rest);
     }
 
     public void payNow(View view) {

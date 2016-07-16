@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Taqseet</string>
+    <string name="add_new_customer">اضف عميل جديد</string>
+    <string name="all_payment">كل المدفوعات</string>
+    <string name="btn_add_customer">اضف عميل</string>
+    <string name="hintCustName">اسم العميل</string>
+    <string name="hintFirstPay">دفعة اولى</string>
+    <string name="hintPhone">رقم العميل</string>
+    <string name="hint_item_name">اسم الصنف</string>
+    <string name="hint_total_price">السعر الكلي</string>
+    <string name="menu_item_delete_customer">حذف عميل</string>
+    <string name="pay_now">ادفع الآن</string>
+    <string name="view_all_customer">كل العملاء</string>
+    <string name="hintPayment">مبلغ القسط</string>
+    <string name="itemName">اسم الصنف</string>
+    <string name="totalCost">المبلغ الكلي</string>
+    <string name="totalPaid">اجمالي المدفوع</string>
+</resources>

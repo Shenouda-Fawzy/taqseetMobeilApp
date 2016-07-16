@@ -12,4 +12,7 @@
     <string name="hint_item_name">Item Name</string>
     <string name="hint_total_price">Total Price</string>
     <string name="btn_add_customer">Add Customer</string>
+    <string name="itemName">Item Name</string>
+    <string name="totalCost">Total Cost</string>
+    <string name="totalPaid">Total Paid</string>
 </resources>
