@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class AddCutomerActivity extends AppCompatActivity {
 
@@ -57,19 +58,26 @@ public class AddCutomerActivity extends AppCompatActivity {
         String custName = userName.getText().toString();
         String custPhone = userPhon.getText().toString();
         String itemNa = itemName.getText().toString();
+        String usCost = userCost.getText().toString();
+        String firsPa = firsPay.getText().toString();
 
-        float totalCost = Float.parseFloat(userCost.getText().toString());
-        float firstPaymen = Float.parseFloat(firsPay.getText().toString());
 
-        customer.setPhonNumber(custPhone);
-        customer.setCustomerName(custName);
-        customer.setItemName(itemNa);
+        if(!custName.isEmpty() && !custPhone.isEmpty() && !itemNa.isEmpty() && !usCost.isEmpty() && !firsPa.isEmpty()) {
 
-        dataSource.openDataBase();
-        dataSource.insertCustomer(customer , totalCost, firstPaymen);
-        dataSource.closeDatabase();
+            float totalCost = Float.parseFloat(usCost);
+            float firstPaymen = Float.parseFloat(firsPa);
 
-        clearView(userCost , userName, userPhon , firsPay, itemName);
+            customer.setPhonNumber(custPhone);
+            customer.setCustomerName(custName);
+            customer.setItemName(itemNa);
+
+            dataSource.openDataBase();
+            dataSource.insertCustomer(customer, totalCost, firstPaymen);
+            dataSource.closeDatabase();
+
+            clearView(userCost, userName, userPhon, firsPay, itemName);
+        }else
+            Toast.makeText(this, "Plz fill all required data", Toast.LENGTH_LONG).show();
     }
 
     public static void clearView(View ... views){

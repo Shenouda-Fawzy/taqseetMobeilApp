@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CustomerDetailActivity extends AppCompatActivity {
 
@@ -61,13 +62,18 @@ public class CustomerDetailActivity extends AppCompatActivity {
     }
 
     public void payNow(View view) {
-        float payment = Float.parseFloat(customerPayET.getText().toString());
-        dataSource.openDataBase();
-        dataSource.addPayment(customerPhone, payment,customerItemName);
-        rest = dataSource.getTotalPaid(customerPhone,customerItemName);
-        restTV.setText("Total paid: " + rest);
-        dataSource.closeDatabase();
-        customerPayET.setText(""); // clear.
+        String pa = customerPayET.getText().toString();
+
+        if(!pa.isEmpty()) {
+            float payment = Float.parseFloat(pa);
+            dataSource.openDataBase();
+            dataSource.addPayment(customerPhone, payment, customerItemName);
+            rest = dataSource.getTotalPaid(customerPhone, customerItemName);
+            restTV.setText(getResources().getText(R.string.totalPaid).toString() + ": " + rest);
+            dataSource.closeDatabase();
+            customerPayET.setText(""); // clear.
+        }else
+            Toast.makeText(this , "Plz Fill the required data", Toast.LENGTH_LONG).show();
     }
 
     public void allPayment(View view) {
