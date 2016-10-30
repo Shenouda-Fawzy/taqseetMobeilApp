@@ -71,11 +71,16 @@ public class AddCutomerActivity extends AppCompatActivity {
             customer.setCustomerName(custName);
             customer.setItemName(itemNa);
 
-            dataSource.openDataBase();
-            dataSource.insertCustomer(customer, totalCost, firstPaymen);
-            dataSource.closeDatabase();
+            if(totalCost < firstPaymen)
+                Toast.makeText(this, "Please first pay must be less than or equal to total cost ",Toast.LENGTH_LONG).show();
+            else {
 
-            clearView(userCost, userName, userPhon, firsPay, itemName);
+                dataSource.openDataBase();
+                dataSource.insertCustomer(customer, totalCost, firstPaymen);
+                dataSource.closeDatabase();
+                Toast.makeText(this, "Done",Toast.LENGTH_LONG).show();
+                clearView(userCost, userName, userPhon, firsPay, itemName);
+            }
         }else
             Toast.makeText(this, "Plz fill all required data", Toast.LENGTH_LONG).show();
     }
